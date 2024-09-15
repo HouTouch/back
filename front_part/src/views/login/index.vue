@@ -1,7 +1,47 @@
 <script setup lang="ts">
 import { number } from 'echarts';
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router';
 import forget from './components/forge_password.vue'
+import {
+    login,
+    register
+} from '@/api/login'
+// 注册
+const handleRegister = async() => {
+    const res = await register(registerData)
+    if (registerData.password === registerData.repssword) {
+        if (res.data.message === "注册成功") {
+            ElMessage({
+                message: "注册成功",
+                type: 'success'
+            })
+            activeName.value = 'first'
+        } else {
+            ElMessage.error('Oops, this is a error message.')
+        }
+        console.log(res)
+    } else {
+        ElMessage.error("注册失败，两次密码不一致")
+    }
+}
+// 登录
+const router = useRouter()
+const hanleLogin = async () => {
+    const res = await login(loginData)
+    const {token} = res.data
+    console.log(res)
+    if (res.data.message === "登录成功") {
+        ElMessage({
+            message: "登录成功",
+            type: 'success'
+        })
+        localStorage.setItem('token', token)//本地化存储token
+        router.push('/home')
+    } else {
+        ElMessage.error('登录失败，请检查您的账号密码')
+    }
+}
 const activeName = ref('first')
 const loginData: formData = reactive({
     account: null,
@@ -17,7 +57,9 @@ interface formData{
     password: string;
     repssword?: string;//?的作用就是当其他数据调用这个接口时，不适用这个数据时，这个数据可以不传
 }
+//忘记面膜弹窗
 const forgetP = ref()
+// 打开忘记密码弹窗
 const openForgetPassword = () => {
     forgetP.value.open()
 }
@@ -50,7 +92,7 @@ const openForgetPassword = () => {
                                             <span class="forget-password-button" @click="openForgetPassword">忘记密码?</span>
                                         </div>
                                         <div class="footer-button">
-                                            <el-button type="primary">登录</el-button>
+                                            <el-button type="primary" @click="hanleLogin">登录</el-button>
                                         </div>
                                         <div class="footer-go-register">
                                             还没有账号？<span class="go-register-button">马上注册</span>
@@ -70,7 +112,7 @@ const openForgetPassword = () => {
                                         <el-input v-model="registerData.repssword" placeholder="请再次输入密码" type="password" />
                                     </el-form-item>
                                     <div class="footer-button">
-                                            <el-button type="primary">注册</el-button>
+                                            <el-button type="primary" @click="handleRegister">注册</el-button>
                                     </div>
                                 </el-form>
                             </el-tab-pane>

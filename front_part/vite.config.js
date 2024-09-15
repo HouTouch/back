@@ -16,27 +16,28 @@ export default defineConfig({
     vue(),
     AutoImport({
       resolvers: [ElementPlusResolver()],
+      eslintrc: {
+        enabled: true
+      }
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+      resolvers: [ElementPlusResolver()]
+    })
   ],
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'scss',
-      patterns: [
-      ]
+      patterns: []
     }
   },
   server: {
-    port: 8080,//默认启动的端口号
-    open: true,//是否自动打开浏览器
-    cors: true,//是否开启跨域
+    port: 8080, //默认启动的端口号
+    open: true, //是否自动打开浏览器
+    cors: true //是否开启跨域
   },
   resolve: {
     alias: {
       '@': pathResolve('./src')
     }
-  },
-  
+  }
 })

@@ -10,6 +10,8 @@ import {
     Message,
     Tools,
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const state = reactive({
     circleUrl:
         'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
@@ -17,6 +19,9 @@ const state = reactive({
 
 const { circleUrl} = toRefs(state)
 
+const quieLogin = () => {
+    router.push('/login')
+}
 </script>
 <template>
     <div class="common-layout">
@@ -124,7 +129,7 @@ const { circleUrl} = toRefs(state)
                                 <el-dropdown-menu>
                                     <el-dropdown-item>设置账号</el-dropdown-item>
                                     <el-dropdown-item>更改头像</el-dropdown-item>
-                                    <el-dropdown-item>退出登录</el-dropdown-item>
+                                    <el-dropdown-item @click="quieLogin">退出登录</el-dropdown-item>
                                 </el-dropdown-menu>
                             </template>
                         </el-dropdown>
