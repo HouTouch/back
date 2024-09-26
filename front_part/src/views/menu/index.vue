@@ -12,16 +12,16 @@ import {
 } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
-const state = reactive({
-    circleUrl:
-        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-})
 
-const { circleUrl} = toRefs(state)
+import useUserInfor from '@/store/userInfor';
+const userInfor = useUserInfor();
+
 
 const quieLogin = () => {
     router.push('/login')
 }
+
+
 </script>
 <template>
     <div class="common-layout">
@@ -105,7 +105,7 @@ const quieLogin = () => {
                         <el-icon><icon-menu /></el-icon>
                         <span>登陆日志</span>
                     </el-menu-item>
-                    <el-menu-item index="9">
+                    <el-menu-item index="set">
                         <el-icon>
                             <Tools />
                         </el-icon>
@@ -115,12 +115,12 @@ const quieLogin = () => {
             </el-aside>
             <el-container>
                 <el-header>
-                    <span class="header-left-content">尊敬的 XXX 欢迎您登录本系统</span>
+                    <span class="header-left-content">尊敬的 {{userInfor.name}} 欢迎您登录本系统</span>
                     <div class="header-right-content">
                         <el-icon :size="20">
                             <Message />
                         </el-icon>
-                        <el-avatar :size="24" :src="circleUrl" />
+                        <el-avatar :size="24" :src="userInfor.imageUrl" />
                         <el-dropdown>
                             <span class="el-dropdown-link">
                                 设置
@@ -170,6 +170,11 @@ const quieLogin = () => {
 } 
 .el-menu-item:hover{
     background-color: #006eff;
+}
+
+.el-main {
+    --el-main-padding: 0;
+    background-color: #f3f4fa;
 }
 :deep(.el-sub-menu__title:hover){
     background-color: #006eff;

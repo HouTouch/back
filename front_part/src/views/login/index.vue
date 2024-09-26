@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { number } from 'echarts';
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router';
@@ -7,6 +7,9 @@ import {
     login,
     register
 } from '@/api/login'
+
+import  useUserInfor  from '@/store/userInfor';
+const userInfor = useUserInfor()
 // 注册
 const handleRegister = async() => {
     const res = await register(registerData)
@@ -30,33 +33,34 @@ const router = useRouter()
 const hanleLogin = async () => {
     const res = await login(loginData)
     const {token} = res.data
-    console.log(res)
     if (res.data.message === "登录成功") {
         ElMessage({
             message: "登录成功",
             type: 'success'
         })
         localStorage.setItem('token', token)//本地化存储token
+        userInfor.userInforData(res.data.results.id)
+        
         router.push('/home')
     } else {
         ElMessage.error('登录失败，请检查您的账号密码')
     }
 }
 const activeName = ref('first')
-const loginData: formData = reactive({
+const loginData = reactive({
     account: null,
     password: ''
 })
-const registerData: formData = reactive({
+const registerData = reactive({
     account: null,
     password: '',
     repssword: ''
 })
-interface formData{
-    account: number;
-    password: string;
-    repssword?: string;//?的作用就是当其他数据调用这个接口时，不适用这个数据时，这个数据可以不传
-}
+// interface formData{
+//     account: number;
+//     password: string;
+//     repssword?: string;//?的作用就是当其他数据调用这个接口时，不适用这个数据时，这个数据可以不传
+// }
 //忘记面膜弹窗
 const forgetP = ref()
 // 打开忘记密码弹窗
