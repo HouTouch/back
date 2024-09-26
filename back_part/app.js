@@ -1,7 +1,7 @@
 // 引入express框架，并使用express
 const express = require('express')
 const app = express()
-
+const Joi = require('joi')
 //解析表单数据的中间件
 //方式req.body 等于underfined
 //以及被express内置的中间件解析
@@ -21,27 +21,48 @@ app.use((req, res, next) => {
 })
 
 
+//用于处理maultipart/form-data格式的数据，主要用于上传文件
+const multer = require("multer");
+// 在server服务端下新建一个public文件，在public文件下新建uploads文件用于存放图片
+const upload = multer({
+    dest: './public/uploads'
+})
+app.use(upload.any())
+
 const cors = require('cors')
 app.use(cors())
 
 const loginRouter = require('./router/login')
 app.use('/api', loginRouter)
 
-const jwtConfig = require('./jwt_config/index')
-const {expressjwt:jwt} = require('express-jwt')
-app.use(jwt({
-    secret: jwtConfig.secretKey,
-    algorithms: ['HS256']
-}).unless({path: [/^\/api\//]}))
+const userRouter = require('./router/userInfo')
+app.use('/user', userRouter)
 
+const setRouter = require('./router/setting')
+app.use('/set', setRouter)
+
+// const jwtConfig = require('./jwt_config/index')
+// const {expressjwt:jwt} = require('express-jwt')
+// app.use(jwt({
+//     secret: jwtConfig.secretKey,
+//     algorithms: ['HS256']
+// }).unless({path: [/^\/api\//]}))
+
+
+
+
+//静态托管
+app.use(express.static('./public'))
 
 //joi验证对不符合joi规则的请求进行拦截报错
-app.use((req, res, next) => {
-    if(err instanceof Joi.ValidationError){
-        res.cc(err)
+app.use((err, req, res, next) => {
+    if (err instanceof Joi.ValidationError) {
+        res.send({
+            status: 1,
+            message: '输入的数据不符合验证规则'
+        })
     }
 })
-
 app.listen(3001, () => {
     console.log('http://127.0.0.1:3001')
 })
