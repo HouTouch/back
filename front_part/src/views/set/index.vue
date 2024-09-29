@@ -10,13 +10,51 @@ import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadProps } from 'element-plus'
 import useUserInfor from '@/store/userInfor';
-import { bindAccount, changeName, changeSex, changeEmail } from '@/api/userInfor'
+import { bindAccount, changeName, changeSex, changeEmail,getUserInfor } from '@/api/userInfor'
 import change_password from './components/change_password.vue'
 import edior from './components/edior.vue';
 import { bus } from '@/utils/mitt';
 import { changeComponyName, getComponyName, getAllSwipers } from '@/api/setting'
+import { ElMessage } from 'element-plus';
+import { onMounted } from 'vue';
+
+
 
 const userInfor = useUserInfor()
+//获取本地存储的id
+const localData = JSON.parse(localStorage.getItem('pinia-userinfor'))
+const { id } = localData || {};
+
+//用户数据
+const name = ref()
+interface userData{
+    account:number,
+    name:string,
+    sex:string,
+    identity:string,
+    department:string,
+    email:string
+}
+
+const userData:userData = reactive({
+    account:null,
+    name:'',
+    sex:'',
+    identity:'',
+    department:'',
+    email:''
+})
+onMounted(async()=>{
+    const res = await getUserInfor(id)
+    userData.account=res.data.account
+    userData.name=res.data.name
+    userData.sex=res.data.sex
+    userData.identity=res.data.identity
+    userData.department=res.data.department
+    userData.email=res.data.email
+})
+
+
 //头像上传成功的函数
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
@@ -50,13 +88,13 @@ console.log(change_Password.value)
 const openChangePassword = () => {
     change_Password.value.open()
 }
-//获取本地存储的id
-const localData = JSON.parse(localStorage.getItem('pinia-userinfor'))
-const { id } = localData || {};
+
 
 //修改姓名
+
+
 const changeNameFnc = async () => {
-    const res = await changeName(userInfor.name, id)
+    const res = await changeName(userData.name, id)
     if (res.status == 1) {
         ElMessage.error('修改失败')
     } else {
@@ -65,7 +103,7 @@ const changeNameFnc = async () => {
 }
 //修改性别
 const changeSexFnc = async () => {
-    const res = await changeSex(userInfor.sex, id)
+    const res = await changeSex(userData.sex, id)
     console.log(res)
     if (res.status == 1) {
         ElMessage.error('修改失败')
@@ -75,7 +113,7 @@ const changeSexFnc = async () => {
 }
 //修改邮箱
 const changeEmailFnc = async () => {
-    const res = await changeEmail(userInfor.email, id)
+    const res = await changeEmail(userData.email, id)
     if (res.status == 1) {
         ElMessage.error('修改失败')
     } else {
@@ -155,7 +193,7 @@ getAllSwipersFnc()
                     <div class="account-infor-warpped">
                         <span>用户账号：</span>
                         <div class="account-infor-content">
-                            <el-input v-model="userInfor.account" disabled></el-input>
+                            <el-input v-model="userData.account" disabled></el-input>
                         </div>
                     </div>
                     <div class="account-infor-warpped">
@@ -167,14 +205,14 @@ getAllSwipersFnc()
                     <div class="account-infor-warpped">
                         <span>用户姓名：</span>
                         <div class="account-infor-content">
-                            <el-input v-model="userInfor.name"></el-input>
+                            <el-input v-model="userData.name"></el-input>
                         </div>
                         <div><el-button type="primary" @click="changeNameFnc">保存</el-button></div>
                     </div>
                     <div class="account-infor-warpped">
                         <span>用户性别：</span>
                         <div class="account-infor-content">
-                            <el-select v-model="userInfor.sex" placeholder="请选择" style="width: 260px;">
+                            <el-select v-model="userData.sex" placeholder="请选择" style="width: 260px;">
                                 <el-option label="男" value="man1" />
                                 <el-option label="女" value="woman2" />
                             </el-select>
@@ -184,19 +222,19 @@ getAllSwipersFnc()
                     <div class="account-infor-warpped">
                         <span>用户身份：</span>
                         <div class="account-infor-content">
-                            <el-input v-model="userInfor.identity" disabled></el-input>
+                            <el-input v-model="userData.identity" disabled></el-input>
                         </div>
                     </div>
                     <div class="account-infor-warpped">
                         <span>用户部门：</span>
                         <div class="account-infor-content">
-                            <el-input v-model="userInfor.department" disabled></el-input>
+                            <el-input v-model="userData.department" disabled></el-input>
                         </div>
                     </div>
                     <div class="account-infor-warpped">
                         <span>用户邮箱：</span>
                         <div class="account-infor-content">
-                            <el-input v-model="userInfor.email"></el-input>
+                            <el-input v-model="userData.email"></el-input>
                         </div>
                         <div><el-button type="primary" @click="changeEmailFnc">保存</el-button></div>
                     </div>

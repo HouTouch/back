@@ -5,7 +5,7 @@ import {
     reactive
 } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { bus } from "@/utils/mitt.js"
+import { bus } from '@/utils/mitt'
 import {
     ElMessage
 } from "element-plus"
@@ -29,8 +29,8 @@ bus.on("editorTitle", async (id: number) => {
         valueHtml.value = res.data
     }
     if (id == 4) {
-        title.value = '编辑高层介绍'
-        const res = await getComponyIntroduce('高层介绍')
+        title.value = '编辑公司高层'
+        const res = await getComponyIntroduce('公司高层')
         valueHtml.value = res.data
     }
 })

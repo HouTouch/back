@@ -35,7 +35,7 @@ const quieLogin = () => {
                         </el-icon>
                         <span>首页</span>
                     </el-menu-item>
-                    <el-menu-item index="2">
+                    <el-menu-item index="overview">
                         <el-icon>
                             <Document />
                         </el-icon>
