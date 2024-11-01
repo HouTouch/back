@@ -4,13 +4,12 @@ import breadCrumbC from '@/components/bread_crumb.vue'
 import { getAllSwipers, getAllComponyIntroduce } from '@/api/setting';
 import { bus } from '@/utils/mitt';
 import introduce from './components/introduce.vue';
-
+import { getCompanyMessageList, getSystemMessageList, updateClick } from '@/api/message';
+import message_click from './components/message_click.vue';
 const item = ref({
     first: '首页'
 })
-const tableData = [
-
-]
+const tableData =ref()
 const imageUrl = ref([])
 const getAllSwipersData = async () => {
     const res = await getAllSwipers()
@@ -30,6 +29,33 @@ const introF = ref()
 const openIntroduce = (id:number) => {
     bus.emit('introduce', id)
     introF.value.open()
+}
+// 获取公司公告
+const getCompanyMessageListFnc = async () => {
+    const res = await getCompanyMessageList()
+    tableData.value = res.data.data
+    
+}
+getCompanyMessageListFnc()
+// 获取系统公告
+const systemTableData = ref()
+const getSystemMessageListFnc = async () => {
+    const res = await getSystemMessageList()
+    systemTableData.value = res.data.data
+    console.log(systemTableData.value)
+}
+getSystemMessageListFnc()
+
+const messageClickF = ref()
+const openMessageClick = async (row: any) => {
+    const data = {
+        message_click_number:row.message_click_number,
+        id:row.id
+    }
+    const res = await updateClick(data)
+    console.log(res)
+    bus.emit('messageClick', row)
+    messageClickF.value.open()
 }
 </script>
 <template>
@@ -60,25 +86,39 @@ const openIntroduce = (id:number) => {
 
             <div class="company-notice">
                 <span class="title">公司公告</span>
-                <el-table :data="tableData" style="width: 100%" :show-header="false">
-                    <el-table-column prop="date" label="Date" width="180" />
-                    <el-table-column prop="name" label="Name" width="180" />
-                    <el-table-column prop="address" label="Address" />
+                <el-table :data="tableData" style="width: 100%" :show-header="false" @row-dblclick="openMessageClick">
+                    <el-table-column prop="message_create_time" label="Date" width="180">
+                        <template #default="{ row }">
+                            <div>{{ row.message_create_time?.slice(0, 16) }}</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="message_level" label="level"></el-table-column>
+                    <el-table-column prop="message_publish_name" label="Name" width="100"></el-table-column>
+                    <el-table-column prop="message_publish_department" label="Address"></el-table-column>
+                    <el-table-column prop="message_title" label="content"></el-table-column>
                 </el-table>
             </div>
             <!-- 系统消息 -->
 
             <div class="system-message">
                 <span class="title">系统消息</span>
-                <el-table :data="tableData" style="width: 100%" :show-header="false">
-                    <el-table-column prop="date" label="Date" width="180" />
-                    <el-table-column prop="name" label="Name" width="180" />
-                    <el-table-column prop="address" label="Address" />
+                <el-table :data="systemTableData" style="width: 100%" :show-header="false"
+                    @row-dblclick="openMessageClick">
+                    <el-table-column prop="message_create_time" label="Date" width="180">
+                        <template #default="{ row }">
+                            <div>{{ row.message_create_time?.slice(0, 16) }}</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="message_publish_name" label="Name" width="180"></el-table-column>
+                    <el-table-column prop="message_level" label="level"></el-table-column>
+                    <el-table-column prop="message_title" label="content"></el-table-column>
+
                 </el-table>
             </div>
         </div>
     </div>
     <introduce ref="introF"></introduce>
+    <message_click ref="messageClickF"></message_click>
 </template>
 
 <style lang="scss" scoped>

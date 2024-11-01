@@ -59,3 +59,38 @@ export const getAllComponyIntroduce = () => {
 
     })
 }
+// 部门设置 数组
+export const setDepartment = data => {
+    return instance({
+        url: '/set/setDepartment',
+        method: 'post',
+        data: {
+            set_value: data
+        }
+    })
+}
+// 获取部门
+export const getDepartment = () => {
+    return instance({
+        url: '/set/getDepartment',
+        method: 'post',
+    })
+}
+
+// 产品设置 数组
+export const setProduct = data => {
+    return instance({
+        url: '/set/setProduct',
+        method: 'post',
+        data: {
+            set_value: data
+        }
+    })
+}
+// 获取产品
+export const getProduct = () => {
+    return instance({
+        url: '/set/getProduct',
+        method: 'post',
+    })
+}

@@ -14,10 +14,11 @@ import { bindAccount, changeName, changeSex, changeEmail,getUserInfor } from '@/
 import change_password from './components/change_password.vue'
 import edior from './components/edior.vue';
 import { bus } from '@/utils/mitt';
-import { changeComponyName, getComponyName, getAllSwipers } from '@/api/setting'
+import { changeComponyName, getComponyName, getAllSwipers, setDepartment, getDepartment, setProduct, getProduct } from '@/api/setting'
 import { ElMessage } from 'element-plus';
-import { onMounted } from 'vue';
-
+import { onMounted, nextTick, toRaw } from 'vue';
+import { ElInput } from 'element-plus'
+import type { InputInstance } from 'element-plus'
 
 
 const userInfor = useUserInfor()
@@ -91,8 +92,6 @@ const openChangePassword = () => {
 
 
 //修改姓名
-
-
 const changeNameFnc = async () => {
     const res = await changeName(userData.name, id)
     if (res.status == 1) {
@@ -169,6 +168,86 @@ const getAllSwipersFnc = async () => {
     imageUrl.value = res.data
 }
 getAllSwipersFnc()
+
+// 部门设置
+const inputValue = ref('')
+const dynamicTags = ref()
+const inputVisible = ref(false)
+const InputRef = ref<InputInstance>()
+// 产品设置
+const PinputValue = ref('')
+const PdynamicTags = ref()
+const PinputVisible = ref(false)
+const PInputRef = ref<InputInstance>()
+// 获取部门数据
+const getDepartmentFnc = async () => {
+    const res = await getDepartment()
+    dynamicTags.value = res.data
+}
+getDepartmentFnc()
+// 获取产品数据
+const getProductFnc = async () => {
+    const res = await getProduct()
+    PdynamicTags.value = res.data
+}
+getProductFnc()
+
+// 部门设置关闭时执行的函数
+const handleClose = async(tag: string) => {
+    dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
+    const res = await setDepartment(JSON.stringify(toRaw(dynamicTags.value)))
+    if (res.status == 200) { 
+        ElMessage.success('删除成功')
+    }else ElMessage.error('删除部门失败，请重新尝试')
+}
+// 产品设置关闭时执行的函数
+const handleProductClose = async (tag: string) => {
+    PdynamicTags.value.splice(PdynamicTags.value.indexOf(tag), 1)
+    const res = await setProduct(JSON.stringify(toRaw(PdynamicTags.value)))
+    if (res.status == 200) {
+        ElMessage.success('删除成功')
+    } else ElMessage.error('删除产品失败，请重新尝试')
+}
+// 部门点击按钮
+const showInput = () => {
+    inputVisible.value = true
+    nextTick(() => {
+        InputRef.value!.input!.focus()
+    })
+}
+// 产品点击按钮
+const showInputProduct = () => {
+    PinputVisible.value = true
+    nextTick(() => {
+        PInputRef.value!.input!.focus()
+    })
+}
+//部门输入数据完成时
+const handleInputConfirm = async() => {
+    if (inputValue.value) {
+        dynamicTags.value.push(inputValue.value)
+        const res = await setDepartment(JSON.stringify(toRaw(dynamicTags.value)))
+        if (res.status == 200) {
+            ElMessage.success('添加部门成功')
+        } else ElMessage.error('添加部门失败')
+    
+    }
+    inputVisible.value = false
+    inputValue.value = ''
+}
+//产品输入数据完成时
+const handleInputConfirmProduct = async () => {
+    if (PinputValue.value) {
+        PdynamicTags.value.push(PinputValue.value)
+        const res = await setProduct(JSON.stringify(toRaw(PdynamicTags.value)))
+        if (res.status == 200) {
+            ElMessage.success('添加产品成功')
+        } else ElMessage.error('添加产品失败')
+
+    }
+    PinputVisible.value = false
+    PinputValue.value = ''
+}
 </script>
 
 <template>
@@ -294,7 +373,37 @@ getAllSwipersFnc()
                         </el-upload>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="其他设置" name="fourth">Task</el-tab-pane>
+                <el-tab-pane label="其他设置" name="fourth">
+                    <div class="other-set">
+                        <div class="department-set">
+                            <span>部门设置</span>
+
+                            <el-tag v-for="tag in dynamicTags" :key="tag" closable :disable-transitions="false"
+                                @close="handleClose(tag)">
+                                {{ tag }}
+                            </el-tag>
+                            <el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" class="w-20" size="small"
+                                @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
+                            <el-button v-else class="button-new-tag" size="small" @click="showInput">
+                                + New Tag
+                            </el-button>
+
+                        </div>
+                        <div class="product-set">
+                            <span>产品设置</span>
+                            <el-tag v-for="tag in PdynamicTags" :key="tag" closable :disable-transitions="false"
+                                @close="handleProductClose(tag)">
+                                {{ tag }}
+                            </el-tag>
+                            <el-input v-if="PinputVisible" ref="PInputRef" v-model="PinputValue" class="w-20"
+                                size="small" @keyup.enter="handleInputConfirmProduct" @blur="handleInputConfirmProduct" />
+                            <el-button v-else class="button-new-tag" size="small" @click="showInputProduct">
+                                + New Tag
+                            </el-button>
+
+                        </div>
+                    </div>
+                </el-tab-pane>
             </el-tabs>
         </div>
     </div>
@@ -348,7 +457,24 @@ getAllSwipersFnc()
 
     }
 }
-
+// 其他设置
+.other-set{
+    padding-left: 50px;
+    font-size: 14px;
+    .department-set{
+        margin-bottom: 24px;
+        span {
+            margin-right: 24px;
+        }
+    }
+        .product-set {
+            margin-bottom: 24px;
+    
+            span {
+                margin-right: 24px;
+            }
+        }
+}
 .demo-tabs>.el-tabs__content {
     padding: 32px;
     color: #6b778c;
@@ -380,7 +506,9 @@ getAllSwipersFnc()
     margin-bottom: 16px;
     margin-left: 20px;
 }
-
+:deep(.w-20){
+    width: 150px;
+}
 // 轮播图</style>
 
 <style>

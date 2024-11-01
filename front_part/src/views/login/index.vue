@@ -7,7 +7,7 @@ import {
     login,
     register
 } from '@/api/login'
-
+import { loginLog } from '@/api/log';
 import  useUserInfor  from '@/store/userInfor';
 const userInfor = useUserInfor()
 // 注册
@@ -32,14 +32,18 @@ const handleRegister = async() => {
 const router = useRouter()
 const hanleLogin = async () => {
     const res = await login(loginData)
-    const {token} = res.data
+    const { token } = res.data
+    const { name, id, account } = res.data.results
     if (res.data.message === "登录成功") {
         ElMessage({
             message: "登录成功",
             type: 'success'
         })
         localStorage.setItem('token', token)//本地化存储token
-        userInfor.userInforData(res.data.results.id)
+        localStorage.setItem('name', name)
+        const res = await loginLog(account, name, id)
+        console.log(res)
+        userInfor.userInforData(id)
         
         router.push('/home')
     } else {

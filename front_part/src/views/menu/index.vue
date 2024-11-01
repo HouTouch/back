@@ -50,12 +50,12 @@ const quieLogin = () => {
                             <span>用户管理</span>
                         </template>
                         <el-menu-item-group title="管理员管理">
-                            <el-menu-item index="3-1">产品管理员</el-menu-item>
-                            <el-menu-item index="3-2">用户管理员</el-menu-item>
-                            <el-menu-item index="3-3">消息管理员</el-menu-item>
+                            <el-menu-item index="product_manage">产品管理员</el-menu-item>
+                            <el-menu-item index="users_manage">用户管理员</el-menu-item>
+                            <el-menu-item index="message_manage">消息管理员</el-menu-item>
                         </el-menu-item-group>
                         <el-menu-item-group title="员工管理">
-                            <el-menu-item index="3-4">用户列表</el-menu-item>
+                            <el-menu-item index="user_list">用户列表</el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
 
@@ -68,10 +68,10 @@ const quieLogin = () => {
                             <span>产品管理</span>
                         </template>
                         <el-menu-item-group title="产品管理">
-                            <el-menu-item index="4-1">产品列表</el-menu-item>
+                            <el-menu-item index="product_manager">产品列表</el-menu-item>
                         </el-menu-item-group>
                         <el-menu-item-group title="出库管理">
-                            <el-menu-item index="4-2">出库列表</el-menu-item>
+                            <el-menu-item index="product_manager_outList">出库列表</el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
 
@@ -84,24 +84,24 @@ const quieLogin = () => {
                             <span>消息管理</span>
                         </template>
                         <el-menu-item-group title="消息管理">
-                            <el-menu-item index="5-1">消息列表</el-menu-item>
+                            <el-menu-item index="message_list">消息列表</el-menu-item>
                         </el-menu-item-group>
-                        <el-menu-item-group title="回收站">
-                            <el-menu-item index="5-2">回收站</el-menu-item>
-                        </el-menu-item-group>
+                        <!-- <el-menu-item-group title="回收站">
+                            <el-menu-item index="recycle">回收站</el-menu-item>
+                        </el-menu-item-group> -->
                     </el-sub-menu>
 
 
-                    <el-menu-item index="6">
+                    <el-menu-item index="file">
                         <el-icon><icon-menu /></el-icon>
                         <span>合同管理</span>
 
                     </el-menu-item>
-                    <el-menu-item index="7">
+                    <el-menu-item index="operation_log">
                         <el-icon><icon-menu /></el-icon>
                         <span>操作日志</span>
                     </el-menu-item>
-                    <el-menu-item index="8">
+                    <el-menu-item index="login_log">
                         <el-icon><icon-menu /></el-icon>
                         <span>登陆日志</span>
                     </el-menu-item>

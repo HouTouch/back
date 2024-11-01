@@ -38,6 +38,9 @@ importers:
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
+      operation:
+        specifier: ^5.0.2
+        version: 5.0.2
       pinia:
         specifier: ^2.2.2
         version: 2.2.2(vue@3.5.5)
@@ -56,6 +59,9 @@ importers:
       style-loader:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.94.0)
+      tracking:
+        specifier: ^1.1.3
+        version: 1.1.3
       vite-plugin-svg-icons:
         specifier: ^2.0.1
         version: 2.0.1(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)(terser@5.32.0))
@@ -87,6 +93,9 @@ importers:
       unplugin-auto-import:
         specifier: ^0.18.3
         version: 0.18.3(@vueuse/core@9.13.0(vue@3.5.5))(rollup@4.21.3)(webpack-sources@3.2.3)
+      unplugin-element-plus:
+        specifier: ^0.8.0
+        version: 0.8.0(rollup@4.21.3)(webpack-sources@3.2.3)
       unplugin-vue-components:
         specifier: ^0.27.4
         version: 0.27.4(@babel/parser@7.25.6)(rollup@4.21.3)(vue@3.5.5)(webpack-sources@3.2.3)
@@ -1882,6 +1891,9 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
+  operation@5.0.2:
+    resolution: {integrity: sha512-tFuFcNZMND6vA40IX+faGKE4xrsM9IIqgHf4peTqB1aMLIB0RwjFMzMq5DP0SgWuUEcKGWJFqOCh7xlH2lP50A==}
+
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
@@ -2360,6 +2372,9 @@ packages:
     resolution: {integrity: sha512-FWtleNAtZ/Ki2qtqej2CXTOayOH9bHDQF+Q48VpWyDXjbYxA4Yz8iDB31zXOBUlOHHKidDbqGVrTUvQMPmBGBw==}
     engines: {node: '>=0.10.0'}
 
+  tracking@1.1.3:
+    resolution: {integrity: sha512-XS9CVMzjp6AHT5e7oRamU8U5Lz3k6BIRTkBVs0XqepwgwXQ4kbbmxrWzTG2v6RMvJC/9MKuSBQiX/5hwsQFcCQ==}
+
   traverse@0.6.10:
     resolution: {integrity: sha512-hN4uFRxbK+PX56DxYiGHsTn2dME3TVr9vbNqlQGcGcPhJAn+tdP126iA+TArMpI4YSgnTkMWyoLl5bf81Hi5TA==}
     engines: {node: '>= 0.4'}
@@ -2439,6 +2454,10 @@ packages:
         optional: true
       '@vueuse/core':
         optional: true
+
+  unplugin-element-plus@0.8.0:
+    resolution: {integrity: sha512-jByUGY3FG2B8RJKFryqxx4eNtSTj+Hjlo8edcOdJymewndDQjThZ1pRUQHRjQsbKhTV2jEctJV7t7RJ405UL4g==}
+    engines: {node: '>=14.19.0'}
 
   unplugin-vue-components@0.27.4:
     resolution: {integrity: sha512-1XVl5iXG7P1UrOMnaj2ogYa5YTq8aoh5jwDPQhemwO/OrXW+lPQKDXd1hMz15qxQPxgb/XXlbgo3HQ2rLEbmXQ==}
@@ -4521,6 +4540,8 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
+  operation@5.0.2: {}
+
   optionator@0.9.4:
     dependencies:
       deep-is: 0.1.4
@@ -5029,6 +5050,8 @@ snapshots:
       regex-not: 1.0.2
       safe-regex: 1.1.0
 
+  tracking@1.1.3: {}
+
   traverse@0.6.10:
     dependencies:
       gopd: 1.0.1
@@ -5146,6 +5169,16 @@ snapshots:
       unplugin: 1.14.1(webpack-sources@3.2.3)
     optionalDependencies:
       '@vueuse/core': 9.13.0(vue@3.5.5)
+    transitivePeerDependencies:
+      - rollup
+      - webpack-sources
+
+  unplugin-element-plus@0.8.0(rollup@4.21.3)(webpack-sources@3.2.3):
+    dependencies:
+      '@rollup/pluginutils': 5.1.0(rollup@4.21.3)
+      es-module-lexer: 1.5.4
+      magic-string: 0.30.11
+      unplugin: 1.14.1(webpack-sources@3.2.3)
     transitivePeerDependencies:
       - rollup
       - webpack-sources
