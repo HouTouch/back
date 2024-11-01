@@ -7,8 +7,8 @@ const id = Joi.required()
 
 const email = Joi.string().pattern(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/).required()
 
-const oldPassword = Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,12}$')).required();
-const newPassword = Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,12}$')).required();
+const oldPassword = Joi.string().pattern(/^(?![0-9]+$)[a-z0-9]{1,50}$/).min(6).max(12).required()
+const newPassword = Joi.string().pattern(/^(?![0-9]+$)[a-z0-9]{1,50}$/).min(6).max(12).required()
 
 exports.name_limit = {
     body: {

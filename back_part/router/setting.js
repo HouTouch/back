@@ -28,6 +28,19 @@ router.post('/getComponyIntroduce', settingHandler.getComponyIntroduce);
 //获取公司所有信息
 router.post('/getAllComponyIntroduce', settingHandler.getAllComponyIntroduce);
 
+// 部门设置 数组
+router.post('/setDepartment', settingHandler.setDepartment);
+
+// 获取部门
+router.post('/getDepartment', settingHandler.getDepartment);
+
+
+// 食品类别设置 数组
+router.post('/setProduct', settingHandler.setProduct);
+
+// 获取食品类别
+router.post('/getProduct', settingHandler.getProduct);
+
 
 //将路由实例作为模块导出
 module.exports = router; 

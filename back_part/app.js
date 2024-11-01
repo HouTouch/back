@@ -41,6 +41,24 @@ app.use('/user', userRouter)
 const setRouter = require('./router/setting')
 app.use('/set', setRouter)
 
+const productRouter = require('./router/product')
+app.use('/product', productRouter)
+
+const messageRouter = require('./router/message')
+app.use('/message', messageRouter)
+
+
+const fileRouter = require('./router/file')
+app.use('/file', fileRouter)
+
+const loginLogRouter = require('./router/login_log')
+app.use('/llog', loginLogRouter)
+
+const operationLogRouter = require('./router/operation_log')
+app.use('/olog', operationLogRouter)
+
+const overviewRouter = require('./router/overview')
+app.use('/overview', overviewRouter)
 // const jwtConfig = require('./jwt_config/index')
 // const {expressjwt:jwt} = require('express-jwt')
 // app.use(jwt({
