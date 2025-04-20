@@ -16,7 +16,7 @@ const router = useRouter()
 import useUserInfor from '@/store/userInfor';
 const userInfor = useUserInfor();
 
-console.log('侧边栏')
+
 const quieLogin = () => {
     router.push('/login')
 }

@@ -13,7 +13,7 @@ import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 //引入Elmessage和Elloading的css样式文件
 import 'element-plus/theme-chalk/el-loading.css';
-
+import 'element-plus/theme-chalk/el-message.css';
 //svg图标
 import 'virtual:svg-icons-register'
 import 'element-plus/dist/index.css'
