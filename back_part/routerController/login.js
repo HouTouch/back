@@ -59,7 +59,7 @@ exports.login = (req, res) => {
         console.log(loginfo.password)
         const compareRrsult = bcryt.compareSync(loginfo.password, results[0].password)
         if (!compareRrsult) return res.cc('登录失败1')
-        console.log(results[0].status)
+
         //检查账号是否冻结
         if (results[0].status == 1) return res.cc('账号已被冻结')
         //生成返回给前端的token

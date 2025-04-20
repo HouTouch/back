@@ -158,7 +158,7 @@ const deleteProduct = (id: number) => {
     bus.emit('deleteProductId', id)
     delete_product.value.open()
 }
-
+console.log('2')
 // 审核产品
 const audit_product = ref()
 const auditProduct = (row: any) => {
