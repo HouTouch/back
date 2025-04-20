@@ -40,7 +40,7 @@ const hanleLogin = async () => {
                 message: "登录成功",
                 type: 'success'
             })
-            console.log('success')
+           
             localStorage.setItem('token', token)//本地化存储token
             localStorage.setItem('name', name)
             const res = await loginLog(account, name, id)
