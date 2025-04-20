@@ -1,6 +1,6 @@
 const db = require('../db/index');
 //导入bcryptjs模块加密中间建
-const bcryt = require('bcrypt');
+const bcryt = require('bcryptjs');
 // 用来生成uid
 const crypto = require('crypto');
 

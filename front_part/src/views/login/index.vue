@@ -3,6 +3,7 @@ import { number } from 'echarts';
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router';
 import forget from './components/forge_password.vue'
+
 import {
     login,
     register
@@ -31,24 +32,28 @@ const handleRegister = async() => {
 // 登录
 const router = useRouter()
 const hanleLogin = async () => {
-    const res = await login(loginData)
-    const { token } = res.data
-    const { name, id, account } = res.data.results
-    if (res.data.message === "登录成功") {
-        ElMessage({
-            message: "登录成功",
-            type: 'success'
-        })
-        localStorage.setItem('token', token)//本地化存储token
-        localStorage.setItem('name', name)
-        const res = await loginLog(account, name, id)
-        console.log(res)
-        userInfor.userInforData(id)
-        
-        router.push('/home')
-    } else {
-        ElMessage.error('登录失败，请检查您的账号密码')
-    }
+    login(loginData).then(async(res)=>{
+        const { token } = res.data
+        const { name, id, account } = res.data.results
+        if (res.data.message === "登录成功") {
+            ElMessage({
+                message: "登录成功",
+                type: 'success'
+            })
+            console.log('success')
+            localStorage.setItem('token', token)//本地化存储token
+            localStorage.setItem('name', name)
+            const res = await loginLog(account, name, id)
+            console.log(res)
+            userInfor.userInforData(id)
+            router.push('/home')
+        } else {
+            ElMessage.error('登录失败，请检查您的账号密码')
+        }
+    }).catch(()=>{
+        ElMessage.error('登录失败，请检查您的账号密码/冻结状态')
+    })
+    
 }
 const activeName = ref('first')
 const loginData = reactive({

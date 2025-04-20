@@ -1,6 +1,6 @@
 const db = require('../db/index');
 //导入bcryptjs模块加密中间建
-const bcryt = require('bcrypt');
+const bcryt = require('bcryptjs');
 
 // 导入jwt生成token
 const jwt = require('jsonwebtoken');
@@ -59,9 +59,9 @@ exports.login = (req, res) => {
         console.log(loginfo.password)
         const compareRrsult = bcryt.compareSync(loginfo.password, results[0].password)
         if (!compareRrsult) return res.cc('登录失败1')
-  
+        console.log(results[0].status)
         //检查账号是否冻结
-        if (results[0].state === 1) return res.cc('账号已被冻结')
+        if (results[0].status == 1) return res.cc('账号已被冻结')
         //生成返回给前端的token
         // 剔除加密后的密码，头像，创建时间，更新时间
         const user = {

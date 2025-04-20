@@ -4,7 +4,7 @@ const mysql = require('mysql');
 //创建数据库连接池
 const db = mysql.createPool({
     host: 'localhost',
-    user: 'root',
+    user: 'hlm',
     password: 'Hlm2002070301.',
     database: 'back_system'
 })

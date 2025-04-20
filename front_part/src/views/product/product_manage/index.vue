@@ -43,6 +43,8 @@ const handleClick = (tab: TabsPaneContext) => {
         getApplyProductFirstPageList()
     }
 }
+import useUserInfor from '@/store/userInfor';
+const userInfor = useUserInfor();
 
 const activeName = ref('first')
 
@@ -256,7 +258,7 @@ const againApply = (row: any) => {
                         </div>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="审核列表" name="second">
+                <el-tab-pane label="审核列表" name="second" v-if="userInfor.identity=='user' || userInfor.identity=='产品管理员'">
                     <div class="pane-content">
                         <div class="pane-top">
                             <div class="module-common-header">

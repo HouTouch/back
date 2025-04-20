@@ -16,7 +16,7 @@ import {
 const breadcrumb = ref();
 // 面包屑参数
 const item = ref({
-  first: "合同管理",
+  first: "文件管理",
 });
 const fileList = ref<UploadUserFile[]>([])
 const baseUrl = ref('http://127.0.0.1:3001/file/uploadFile')

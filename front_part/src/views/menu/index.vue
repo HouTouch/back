@@ -42,7 +42,7 @@ const quieLogin = () => {
                         <span>系统概览</span>
                     </el-menu-item>
 
-                    <el-sub-menu index="3">
+                    <el-sub-menu index="3" v-if="userInfor.identity=='user' || userInfor.identity=='用户管理员'">
                         <template #title>
                             <el-icon>
                                 <User />
@@ -60,7 +60,7 @@ const quieLogin = () => {
                     </el-sub-menu>
 
 
-                    <el-sub-menu index="4">
+                    <el-sub-menu index="4" v-if="userInfor.identity=='user' || userInfor.identity=='用户' || userInfor.identity == '产品管理员'">
                         <template #title>
                             <el-icon>
                                 <TakeawayBox />
@@ -70,13 +70,13 @@ const quieLogin = () => {
                         <el-menu-item-group title="产品管理">
                             <el-menu-item index="product_manager">产品列表</el-menu-item>
                         </el-menu-item-group>
-                        <el-menu-item-group title="出库管理">
+                        <el-menu-item-group title="出库管理" >
                             <el-menu-item index="product_manager_outList">出库列表</el-menu-item>
                         </el-menu-item-group>
                     </el-sub-menu>
 
 
-                    <el-sub-menu index="5">
+                    <el-sub-menu index="5" v-if="userInfor.identity=='user' || userInfor.identity=='消息管理员'">
                         <template #title>
                             <el-icon>
                                 <ChatSquare />
@@ -90,12 +90,9 @@ const quieLogin = () => {
                             <el-menu-item index="recycle">回收站</el-menu-item>
                         </el-menu-item-group> -->
                     </el-sub-menu>
-
-
                     <el-menu-item index="file">
                         <el-icon><icon-menu /></el-icon>
-                        <span>合同管理</span>
-
+                        <span>文件管理</span>
                     </el-menu-item>
                     <el-menu-item index="operation_log">
                         <el-icon><icon-menu /></el-icon>
